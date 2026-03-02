@@ -10,7 +10,7 @@
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +18,7 @@
 
   .container {
     background: white;
-    padding: 28px;
+    padding: 30px;
     border-radius: 25px;
     width: 90%;
     max-width: 420px;
@@ -41,37 +41,51 @@
     color: #555;
   }
 
-  .buttons {
+  /* YES AREA */
+  .yes-area {
+    margin-top: 20px;
+    min-height: 80px; /* reserves space */
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin-top: 20px;
-  }
-
-  button {
-    padding: 12px 22px;
-    font-size: 16px;
-    border-radius: 30px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    line-height: 1.4;
+    align-items: center;
   }
 
   #yesBtn {
+    padding: 14px 28px;
+    font-size: 16px;
+    border-radius: 30px;
+    border: none;
     background: #ff5c8a;
     color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  /* NO AREA */
+  .no-area {
+    margin-top: 20px;
+    min-height: 90px; /* space for multiline text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #noBtn {
+    padding: 12px 22px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
     background: #eee;
+    cursor: pointer;
+    line-height: 1.4;
+    max-width: 100%;
   }
 
   .quote {
-    margin-top: 22px;
+    margin-top: 25px;
     font-style: italic;
     color: #ff5c8a;
-    font-size: 17px;
+    font-size: 18px;
     display: none;
   }
 </style>
@@ -85,13 +99,18 @@
   <h1>Yasmin ☕💖</h1>
   <p>Would you like to go grab a coffee with me?</p>
 
-  <div class="buttons">
+  <!-- YES BUTTON AREA -->
+  <div class="yes-area">
     <button id="yesBtn">Yes ☕</button>
+  </div>
+
+  <!-- NO RESPONSE AREA -->
+  <div class="no-area">
     <button id="noBtn">No 🙈</button>
   </div>
 
   <div class="quote" id="quote">
-    “Some moments are better with coffee and good company.”
+    “I’ll want to take a risk.”
   </div>
 
   <!-- Sounds -->
@@ -100,7 +119,6 @@
 </div>
 
 <script>
-/* MULTI-LINE NO TEXTS (AS YOU ASKED) */
 const noTexts = [
   "Are you sure u'll not come with me? 🥺",
   "Not if<br>coffee is on me ☕",
@@ -113,8 +131,8 @@ const noTexts = [
 let step = 0;
 let scale = 1;
 
-const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 const quote = document.getElementById("quote");
 const app = document.getElementById("app");
 const noSound = document.getElementById("noSound");
@@ -124,11 +142,11 @@ noBtn.addEventListener("click", () => {
   noSound.play();
 
   step++;
-  scale += 0.45;
+  scale += 0.4;                 // YES grows
   yesBtn.style.transform = `scale(${scale})`;
 
   if (step < noTexts.length) {
-    noBtn.innerHTML = noTexts[step]; // IMPORTANT for <br>
+    noBtn.innerHTML = noTexts[step];
   }
 
   if (step === noTexts.length - 1) {
@@ -139,13 +157,12 @@ noBtn.addEventListener("click", () => {
 
 yesBtn.addEventListener("click", () => {
   yesSound.play();
-
   app.innerHTML = `
     <img src="https://media.giphy.com/media/l4FGpP4lxGGgK5CBW/giphy.gif">
     <h1>Yayyy! ☕💖</h1>
     <p>Looking forward to a cozy coffee with you, Yasmin.</p>
     <div class="quote" style="display:block;">
-      “Sometimes I want to take some risks, so will be there to feel that how it feels after deciding to take that risk...”
+      “Sometimes I like to take a little risk… and this time, I want to be there to feel how it feels after choosing that risk.”
     </div>
   `;
 });
