@@ -6,6 +6,10 @@
 <title>Coffee with You ☕</title>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -44,36 +48,36 @@
   /* YES AREA */
   .yes-area {
     margin-top: 20px;
-    min-height: 80px; /* reserves space */
+    min-height: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   #yesBtn {
-    padding: 14px 28px;
+    padding: 14px 30px;
     font-size: 16px;
     border-radius: 30px;
     border: none;
     background: #ff5c8a;
     color: white;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: all 0.25s ease;
   }
 
   /* NO AREA */
   .no-area {
     margin-top: 20px;
-    min-height: 90px; /* space for multiline text */
+    min-height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   #noBtn {
-    padding: 12px 22px;
-    font-size: 16px;
-    border-radius: 20px;
+    padding: 14px 22px;
+    font-size: 15px;
+    border-radius: 18px;
     border: none;
     background: #eee;
     cursor: pointer;
@@ -129,7 +133,9 @@ const noTexts = [
 ];
 
 let step = 0;
-let scale = 1;
+let yesFont = 16;
+let yesPaddingX = 30;
+let yesPaddingY = 14;
 
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
@@ -140,10 +146,15 @@ const yesSound = document.getElementById("yesSound");
 
 noBtn.addEventListener("click", () => {
   noSound.play();
-
   step++;
-  scale += 0.4;                 // YES grows
-  yesBtn.style.transform = `scale(${scale})`;
+
+  // SAFE growth (no overlap)
+  yesFont += 3;
+  yesPaddingX += 4;
+  yesPaddingY += 2;
+
+  yesBtn.style.fontSize = yesFont + "px";
+  yesBtn.style.padding = `${yesPaddingY}px ${yesPaddingX}px`;
 
   if (step < noTexts.length) {
     noBtn.innerHTML = noTexts[step];
